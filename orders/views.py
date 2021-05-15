@@ -5,8 +5,8 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
 
-from .models import OrderModels, ClientModels
-from .serializer import OrderModelsSerializer, ClientModelsSerializer
+from .models import OrderModels, ClientModels, NanoModels
+from .serializer import OrderModelsSerializer, ClientModelsSerializer, NanoModelsSerializer
 from unnamed_project.settings import EMAIL_HOST_USER
 
 
@@ -23,7 +23,7 @@ class OrderSafeAndSendEmailViewSet(viewsets.ModelViewSet):
         headers = self.get_success_headers(serializer.data)
         send_mail('Новый заказ', f'Пользователь {data["first_name"]} заказал {data["product"]}.\n'
                   f'Его данные: номер телефона-{data["phone"]}, адрес-{data["address"]}',
-                  EMAIL_HOST_USER, ['djanbolotov03@gmail.com'])
+                  EMAIL_HOST_USER, ['nnormalkg@gmail.com'])
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
@@ -34,12 +34,34 @@ class OrderSafeAndSendClientViewSet(viewsets.ModelViewSet):
     http_method_names = ['post']
 
     def create(self, request, *args, **kwargs):
+        data = request.data['phone_number']
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        send_mail('отправить', f'номер телефона {data}',
+                  EMAIL_HOST_USER, ['jumagylov655@gmail.com'])
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+
+class OrderSafeAndSendNanoViewSet(viewsets.ModelViewSet):
+
+    serializer_class = NanoModelsSerializer
+    queryset = NanoModels
+    http_method_names = ['post']
+
+    def create(self, request, *args, **kwargs):
         data = request.data
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
-        send_mail('отправить', f'номер телефона {data["phone_number"]}',
-                  EMAIL_HOST_USER, ['nnormalkg@gmail.com'])
+        send_mail('nano.kg:',
+                  f'имя - {data["name"]},.\n'
+                  f'e-mail - {data["email"]}',
+                  EMAIL_HOST_USER, ['jumagylov655@gmail.com'])
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+
+
 

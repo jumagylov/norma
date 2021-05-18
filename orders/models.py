@@ -31,3 +31,10 @@ class NanoModels(models.Model):
         return f'{self.name}, {self.email}'
 
 
+class FeedBackModels(models.Model):
+    feed_user = models.CharField(max_length=100)
+    feed_mail = models.EmailField(unique=True)
+    feed_text = models.CharField(max_length=300)
+
+    def __str__(self):
+        return self.feed_user

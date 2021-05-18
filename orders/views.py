@@ -5,8 +5,8 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
 
-from .models import OrderModels, ClientModels, NanoModels
-from .serializer import OrderModelsSerializer, ClientModelsSerializer, NanoModelsSerializer
+from .models import OrderModels, ClientModels, NanoModels, FeedBackModels
+from .serializer import OrderModelsSerializer, ClientModelsSerializer, NanoModelsSerializer, FeedBackSerializer
 from unnamed_project.settings import EMAIL_HOST_USER
 
 
@@ -63,5 +63,16 @@ class OrderSafeAndSendNanoViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
+class OrderSafeAndSendFeedBackViewSet(viewsets.ModelViewSet):
+    queryset = FeedBackModels.objects.all()
+    serializer_class = FeedBackSerializer
+    http_method_names = ['post']
 
-
+    def create(self, request, *args, **kwargs):
+        data = request.data
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        send_mail(data['feed_user'], data['feed_text'], data['feed_mail'], ['mnkvk@mail.ru'])
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)

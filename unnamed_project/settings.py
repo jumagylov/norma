@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'news.apps.NewsConfig',
     'reports.apps.ReportsConfig',
     'orders.apps.OrdersConfig',
+    # 'OFD.apps.OFDConfig'
 
     # cors
     'corsheaders',

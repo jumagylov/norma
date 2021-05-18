@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import OrderModels, ClientModels, NanoModels
+from .models import OrderModels, ClientModels, NanoModels, FeedBackModels
 
 
 class OrderModelsAdmin(admin.ModelAdmin):
@@ -30,3 +30,10 @@ class NanoModelsAdmin(admin.ModelAdmin):
 
 
 admin.site.register(NanoModels, NanoModelsAdmin)
+
+
+class FeedBackModelsAdmin(admin.ModelAdmin):
+        list_display = [field.name for field in FeedBackModels._meta.fields]
+
+        class Meta:
+            model = FeedBackModels

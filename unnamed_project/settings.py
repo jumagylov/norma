@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'news.apps.NewsConfig',
     'reports.apps.ReportsConfig',
     'orders.apps.OrdersConfig',
-    # 'OFD.apps.OFDConfig'
+    'equipments.apps.EquipmentsConfig',
 
     # cors
     'corsheaders',
@@ -139,9 +139,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'akti',
-        'USER': 'akti',
-        'PASSWORD': 'admin',
+        'NAME': 'asdf',
+        'USER': 'asdf',
+        'PASSWORD': 'asdf',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }

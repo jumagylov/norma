@@ -1,9 +1,10 @@
+from django.conf.urls import url
 from django.http import Http404
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.exceptions import ParseError
 from rest_framework.permissions import IsAuthenticated
-
+import requests
 from .serializers import *
 
 
@@ -11,6 +12,8 @@ class NewsViewSet(viewsets.ModelViewSet):
     #permission_classes = (IsAuthenticated,)
     queryset = News.objects.filter(published=True)
     serializer_class = NewsSerializer
+
+
 
     def list(self, request, *args, **kwargs):
         news = self.queryset.all()

@@ -26,4 +26,4 @@ class NanoModelsSerializer(serializers.ModelSerializer):
 class FeedBackSerializer(serializers.ModelSerializer):
     class Meta:
         model = FeedBackModels
-        fields = 'all'
+        fields = '__all__'

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Equipments
+from .models import Equipments, Ofd
 
 
 class EquipmentsModelsAdmin(admin.ModelAdmin):
@@ -11,3 +11,13 @@ class EquipmentsModelsAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Equipments, EquipmentsModelsAdmin)
+
+
+class OfdModelsAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in Ofd._meta.fields]
+
+    class Meta:
+        model = Ofd
+
+
+admin.site.register(Ofd, OfdModelsAdmin)
